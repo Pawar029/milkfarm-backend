@@ -35,4 +35,31 @@ class NewMember(APIView):
 #     queryset = Member.objects.all()
 #     serializer_class=AddMemberSerializer
 
+# Creating view for TodaysData model
+class Today(APIView):
+    serializer_class = TodaysDataSerializer
+    def get(self,request):
+        alldata = TodaysData.objects.all().values()
+        return Response({"Message":"Today's Milk Data","Data":alldata})
+
+
+    def post(self,request):
+        print('Request data is : ',request.data)
+        serializer_obj = TodaysDataSerializer(data=request.data)
+        if(serializer_obj.is_valid()):
+
+            TodaysData.objects.create( 
+                                name=serializer_obj.data.get("name"),
+                                fat=serializer_obj.data.get("fat"),
+                                snf=serializer_obj.data.get("snf"),
+                                rate=serializer_obj.data.get("rate"),
+                                lit=serializer_obj.data.get("lit"),
+                                # types=serializer_obj.data.get("types"),
+                                )
+ 
+        info = TodaysData.objects.all().values()
+        return Response({"Message":"New data Added","Adding Data ":info})
+
+
+
 

@@ -10,3 +10,12 @@ class Member(models.Model):
     # types = models.CharField(max_length=100,choices=
     #                         (('cow','cow'),
     #                          ('buffalo','buffalo')))
+
+
+class TodaysData(models.Model):
+    name = models.CharField(max_length=50)
+    fat = models.DecimalField( max_digits=5, decimal_places=2)
+    snf = models.DecimalField( max_digits=5, decimal_places=2)
+    rate = models.DecimalField( max_digits=5, decimal_places=2)
+    lit = models.DecimalField( max_digits=5, decimal_places=2)
+    
