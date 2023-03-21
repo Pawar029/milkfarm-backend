@@ -12,19 +12,18 @@ class MemberSerializer(serializers.Serializer):
     phone = serializers.IntegerField(label="Enter Phone No.:")
     email = serializers.CharField(label="Enter Email")
     address = serializers.CharField(label="Address:")
-    # types = serializers.CharField(label="cow or Buffalo milk:")
+    types = serializers.CharField(label="cow or Buffalo milk:")
 
 
 # Creating Serializer for Todays Data 
 class TodaysDataSerializer(serializers.ModelSerializer):
     
-    # name = serializers.CharField(label="Enter Name :")
-    # fat = serializers.DecimalField(label="Enter Fat:")
-    # snf = serializers.DecimalField(label="Enter SNF:")
-    # rate = serializers.DecimalField(label="Enter Rate per liter:")
-    # lit = serializers.DecimalField(label="Enter Liter of Milk:")
-
     class Meta:
         model = TodaysData
+        fields = "__all__"
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
         fields = "__all__"
     

@@ -26,5 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url("member/",views.NewMember.as_view()),
     url("todaysdata/",views.Today.as_view()),
+    url("payment/",views.Payments.as_view()),
     # path('',include(router.urls))
 ]
