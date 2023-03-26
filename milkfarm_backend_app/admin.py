@@ -8,10 +8,12 @@ class AdminMember(admin.ModelAdmin):
 
 
 class AdminTodaysData(admin.ModelAdmin):
-    list_display = ['id','name','name_id','fat','snf','rate','lit']
+    list_display = ['date','shift','id','name','name_id','fat','snf','rate','lit','tod_amt']
 
+class AdminPayment(admin.ModelAdmin):
+    list_display = ['name_id','myname','start_date','end_date','lit','amt_of_week']
 
 # Register your models here.
 admin.site.register(Member , AdminMember)
 admin.site.register(TodaysData , AdminTodaysData)
-admin.site.register(Payment)
+admin.site.register(Payment,AdminPayment)
