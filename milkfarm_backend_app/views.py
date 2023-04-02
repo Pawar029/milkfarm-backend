@@ -33,8 +33,11 @@ class NewMember(APIView):
                                 address=serializer_obj.data.get("address"),
                                 types=serializer_obj.data.get("types"),
                                 )
-        member = Member.objects.all().values()
-        return Response({"Message":"New member Added", "AddMember":member})
+            member = Member.objects.all().values()
+            return Response({"Message":"New member Added", "AddMember":member})
+        else:
+            print("serializer not valid")
+
 
 # .filter(phone=request.data["phone"])
 
@@ -48,11 +51,11 @@ class Today(APIView):
     def get(self,request):
         date = request.GET.get('date')
         shift = request.GET.get('shift')
-        # print("here data is: ",date)
-        # print("here shift is: ",shift)
+        print("here data is: ",date)
+        print("here shift is: ",shift)
         obj_by_date = TodaysData.objects.filter(date=date,shift=shift )
-        # for obj in obj_by_date:
-        #     print(obj.fat)
+        for obj in obj_by_date:
+            print(obj.fat)
          
         serialized_data =  list(obj_by_date.values())
         return JsonResponse(serialized_data, safe=False)
@@ -63,7 +66,7 @@ class Today(APIView):
 
     def post(self,request):
         print('Request data is :',request.data)
-        name = request.data.get("name")
+        name = request.data.get("name") 
         print(name)
         name_obj = Member.objects.get(name=name)
         print(name_obj)  
@@ -88,8 +91,10 @@ class Today(APIView):
         serializer_obj = TodaysDataSerializer(data=dict)
         if(serializer_obj.is_valid()):
             serializer_obj.save()
-        info = TodaysData.objects.all().values()
-        return Response({"Message":"New data Added","Adding Data ":info})
+            info = TodaysData.objects.all().values()
+            return Response({"Message":"New data Added","Adding Data ":info})
+        else:
+            print("serializer not valid")
          
 class Payments(APIView):
     serializer_class = PaymentSerializer
@@ -98,13 +103,13 @@ class Payments(APIView):
         end_date = request.GET.get('end_date')
         print("here is me :",start_date)
         print(end_date)
-        obj_by_date = Payment.objects.filter(start_date=start_date,end_date=end_date )
+        obj_by_date = Payment.objects.filter(start_date = start_date,end_date = end_date )
         for obj in obj_by_date:
             print(obj.amt_of_week)
         serialized_data =  list(obj_by_date.values())
         return JsonResponse(serialized_data, safe=False)
-        all = Payment.objects.all().values()
-        return Response({"Message":"List of Members", "Member List":all})    
+        # all = Payment.objects.all().values()
+        # return Response({"Message":"List of Members", "Member List":all})    
 
     def post(self,request):
         print('Request data is :',request.data)
@@ -123,11 +128,14 @@ class Payments(APIView):
         for ob in obj_by_date:
             temp = str(ob.name)
             amt = int(ob.tod_amt)
+            # print(ob.date)
+            # print(temp)
+            # print(amt)
             lit_of_day = float(ob.lit)
             total[temp] += amt
             liter[temp] += lit_of_day
         # print(total)
-        print(liter)
+        # print(liter)
         for n in all_name:
             temp = str(n.name)
             dict = {
@@ -138,7 +146,7 @@ class Payments(APIView):
                 "amt_of_week":total[temp],
                 "lit":liter[temp],
             }
-            # print(dict)
+            print(dict)
             serializer_obj = PaymentSerializer(data=dict)
             if(serializer_obj.is_valid()):
                 serializer_obj.save()
